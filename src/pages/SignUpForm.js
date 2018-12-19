@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class SignUpForm extends Component {
     constructor() {
         super();
 
         this.state = {
-            email: '',
-            password: '',
-            name: '',
-            hasAgreed: false
+            formFields:{
+                email: '',
+                password: '',
+                name: '',
+                hasAgreed: false,
+                contactNumber:'',
+                licenseNumber:'',
+                address:''
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,7 +34,15 @@ class SignUpForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
+        axios.post('', formFields)
+    .then(function(response){
+            console.log(response);
+            //Perform action based on response
+        })
+            .catch(function(error){
+                console.log(error);
+                //Perform action based on error
+            })
         console.log('The form was submitted with the following data:');
         console.log(this.state);
     }
@@ -57,7 +71,7 @@ class SignUpForm extends Component {
               </div>
 
               <div className="FormField">
-                  <button className="FormField__Button mr-20">Sign Up</button> <Link to="/sign-in" className="FormField__Link">I'm already member</Link>
+                  <button className="FormField__Button mr-20" >Sign Up</button> <Link to="/sign-in" className="FormField__Link">I'm already member</Link>
               </div>
             </form>
           </div>
