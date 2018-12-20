@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Router, browserHistory } from 'react-router'
+
 
 class SignInForm extends Component {
     constructor() {
@@ -9,9 +11,9 @@ class SignInForm extends Component {
             email: '',
             password: ''
         };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.signIn=this.signIn.bind(this);
     }
 
     handleChange(e) {
@@ -26,15 +28,45 @@ class SignInForm extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         console.log('The form was submitted with the following data:');
         console.log(this.state);
     }
+    signIn(){
+        let data = this.createRequest();
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        const options = {
+            method: 'GET',
+            headers,
+            body: JSON.stringify(data)
+        };
+        const request = new Request('signin api',options);
+        const response = fetch(request);
+        const role = response.role;
+
+        if(role === 'Owner'){
+            ///link to driver owner page
+            {/*<Route path="owner/:process" component={ownerpagename} onEnter={requireAuth}/>*/}
+        }else {
+            //driver page
+            //send the email to that page...
+
+        }
+    }
+    createRequest(){
+        let formFields = {};
+        formFields.email = this.state.email;
+        formFields.password = this.state.password;
+        return formFields;
+    }
+//when we click on the sign in button we need to navigate to
+// different page and we will send the email id for the vehicle choosing..
 
     render() {
         return (
         <div className="FormCenter">
-            <form onSubmit={this.handleSubmit} className="FormFields" onSubmit={this.handleSubmit}>
+            <form onSubmit={this.signIn} className="FormFields" onSubmit={this.handleSubmit}>
             <div className="FormField">
                 <label className="FormField__Label" htmlFor="email">E-Mail Address</label>
                 <input type="email" id="email" className="FormField__Input" placeholder="Enter your email" name="email" value={this.state.email} onChange={this.handleChange} />
@@ -46,7 +78,7 @@ class SignInForm extends Component {
               </div>
 
               <div className="FormField">
-                  <button className="FormField__Button mr-20">Sign In</button> <Link to="/" className="FormField__Link">Create an account</Link>
+                  <button className="FormField__Button mr-20" onClick={this.signIn}>Sign In</button> <Link to="/" className="FormField__Link">Create an account</Link>
               </div>
             </form>
           </div>
