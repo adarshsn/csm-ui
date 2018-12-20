@@ -1,25 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import AddVehicleForm from './AddVehicleForm'
-import { Route, browserHistory } from 'react-router'
-
-//actually we need to ask who's signup it is. then we will link..
-class SignUpForm extends Component {
+import request from "../../node_modules/superagent/superagent";
+// we will have vehicle type,date...
+// from which page we will go to vehicle choosing page after sign in right?
+// go to sign in page..
+class VehicleChoosePage extends Component {
     constructor() {
         super();
 
         this.state = {
-            email: "test@gmail.co",
-            name: "test",
-            contactNumber: "test",
-            zipCode: "test",
-            ownerAddress: "test",
-            paymentDetailsRequest:{
-                bankAccountNumber:"dda",
-                branchName:"sdfa",
-                bankName:"fss"
-            },
-            hasAgreed:false
+            email: this.props.email
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -38,20 +28,18 @@ class SignUpForm extends Component {
 
 
     submit(){
-        // let data = this.createRequest();
-        // const headers = new Headers();
-        // headers.append('Content-Type', 'application/json');
-        // headers.append('Accept', 'application/json');
-        // const options = {
-        //     method: 'POST',
-        //     headers,
-        //     body: JSON.stringify(data)
-        // };
-        // const request = new Request('http://10.177.2.240:8080/signup/vehicleOwner',options);
-        // const response = fetch(request);
-        // const status = response.status;
-        {/*<Route path="http://localhost:3000/addVehicle" component={AddVehicleForm}/>*/}
-        browserHistory.push('http://localhost:3000/addVehicle')
+        let data = this.createRequest();
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', 'application/json');
+        const options = {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(data)
+        };
+        const request = new Request('http://10.177.2.240:8080/signup/vehicleOwner',options);
+        const response = fetch(request);
+        const status = response.status;
     }
     createRequest(){
         let formFields = {};
@@ -60,7 +48,6 @@ class SignUpForm extends Component {
         formFields.contactNumber = this.state.contactNumber;
         formFields.zipCode = this.state.zipCode;
         formFields.ownerAddress = this.state.ownerAddress;
-        formFields.paymentDetailsRequest = this.state.paymentDetailsRequest;
         return formFields;
     }
     render() {
@@ -84,24 +71,9 @@ class SignUpForm extends Component {
                                name="email" value={this.state.email} onChange={this.handleChange}/>
                     </div>
                     <div className="FormField">
-                        <label className="FormField__Label" htmlFor="name">Contact Number</label>
-                        <input type="text" id="contactNumber" className="FormField__Input" placeholder="Enter your Contact Number"
+                        <label className="FormField__Label" htmlFor="contactNumber">Contact Number</label>
+                        <input type="number" id="contactNumber" className="FormField__Input" placeholder="Enter your Contact Number"
                                name="contactNumber" value={this.state.contactNumber} onChange={this.handleChange}/>
-                    </div>
-                    <div className="FormField">
-                        <label className="FormField__Label" htmlFor="name">Bank Account Number</label>
-                        <input type="text" id="bankAccountNumber" className="FormField__Input" placeholder="Enter your bank Account Number"
-                               name="paymentDetailsRequest.bankAccountNumber" value={this.state.paymentDetailsRequest.bankAccountNumber} onChange={this.handleChange}/>
-                    </div>
-                    <div className="FormField">
-                        <label className="FormField__Label" htmlFor="name">Branch Name</label>
-                        <input type="text" id="branchName" className="FormField__Input" placeholder="Enter your branch name"
-                               name="paymentDetailsRequest.branchName" value={this.state.paymentDetailsRequest.branchName} onChange={this.handleChange}/>
-                    </div>
-                    <div className="FormField">
-                        <label className="FormField__Label" htmlFor="name">Bank Name</label>
-                        <input type="text" id="bankName" className="FormField__Input" placeholder="Enter your bank name"
-                               name="paymentDetailsRequest.bankName" value={this.state.paymentDetailsRequest.bankName} onChange={this.handleChange}/>
                     </div>
                     <div className="FormField">
                         <label className="FormField__CheckboxLabel">
@@ -110,6 +82,23 @@ class SignUpForm extends Component {
                             in <a href="" className="FormField__TermsLink">terms of service</a>
                         </label>
                     </div>
+                    ///////////////////////////////////
+                    <div className="FormField">
+                        <label className="FormField__Label" htmlFor="bankAccountNumber">Bank Account Number</label>
+                        <input type="number" id="bankAccountNumber" className="FormField__Input" placeholder="Enter your bank Account Number"
+                               name="paymentDetailsRequest.bankAccountNumber" value={this.state.paymentDetailsRequest.bankAccountNumber} onChange={this.handleChange}/>
+                    </div>
+                    <div className="FormField">
+                        <label className="FormField__Label" htmlFor="contactNumber">Branch Name</label>
+                        <input type="text" id="branchName" className="FormField__Input" placeholder="Enter your branch name"
+                               name="paymentDetailsRequest.branchName" value={this.state.paymentDetailsRequest.branchName} onChange={this.handleChange}/>
+                    </div>
+                    <div className="FormField">
+                        <label className="FormField__Label" htmlFor="bankName">Contact Number</label>
+                        <input type="text" id="bankName" className="FormField__Input" placeholder="Enter your bank name"
+                               name="paymentDetailsRequest.bankName" value={this.state.paymentDetailsRequest.bankName} onChange={this.handleChange}/>
+                    </div>
+                    //////////////////////////
                     <div className="FormField">
                         <button className="FormField__Button mr-20">Sign Up</button>
                         <Link to="/sign-in" className="FormField__Link">I'm already member</Link>
@@ -120,4 +109,4 @@ class SignUpForm extends Component {
     }
 }
 
-export default SignUpForm;
+export default VehicleChoosePage;
