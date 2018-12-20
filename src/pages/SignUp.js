@@ -8,7 +8,7 @@ class SignUpForm extends Component {
         super();
 
         this.state = {
-            email: "test@gmail.co",
+            email: "test@gmail.test",
             name: "test",
             password: "test",
             role: "OWNER",
@@ -40,8 +40,16 @@ class SignUpForm extends Component {
              body: JSON.stringify(data)
          };
          const request = new Request('http://10.177.2.243:8080/signup/signUp',options);
-         const response = fetch(request);
+         const response = fetch(request).then();
          const status = response.status;
+         if(status === 200)
+         {
+             console.log("success" + status)
+         }
+         else
+         {
+             console.log("failure")
+         }
         {/*<Route path="http://localhost:3000/addVehicle" component={AddVehicleForm}/>*/}
         //browserHistory.push('http://localhost:3000/addVehicle')
     }
@@ -57,7 +65,7 @@ class SignUpForm extends Component {
     render() {
         return (
             <div className="FormCenter">
-                <form className="FormFields">
+                <form onSubmit={this.submit}className="FormFields">
                     <div className="FormField">
                         <label className="FormField__Label" htmlFor="name">Full Name</label>
                         <input type="text" id="name" className="FormField__Input" placeholder="Enter your full name"
@@ -75,12 +83,11 @@ class SignUpForm extends Component {
                                name="email" value={this.state.email} onChange={this.handleChange}/>
                     </div>
                     <div className="FormField">
-                        <button className="FormField__Button mr-20" onClick={this.submit}>Sign Up</button>
+                        <button type="submit" className="FormField__Button mr-20">Sign Up</button>
                                             <Link to="/sign-in" className="FormField__Link">I'm already member</Link>
                                         </div>
                 </form>
-            </div>
-        );
+            </div>);
     }
 }
 
