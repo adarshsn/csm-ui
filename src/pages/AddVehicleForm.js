@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import request from "../../node_modules/superagent/superagent";
+//import request from "../../node_modules/superagent/superagent";
 
 class AddVehicleForm extends Component {
     constructor() {

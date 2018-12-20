@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import AddVehicleForm from './AddVehicleForm'
-import { Route, browserHistory } from 'react-router'
 
 //actually we need to ask who's signup it is. then we will link..
 class SignUpForm extends Component {
@@ -38,20 +37,20 @@ class SignUpForm extends Component {
 
 
     submit(){
-        // let data = this.createRequest();
-        // const headers = new Headers();
-        // headers.append('Content-Type', 'application/json');
-        // headers.append('Accept', 'application/json');
-        // const options = {
-        //     method: 'POST',
-        //     headers,
-        //     body: JSON.stringify(data)
-        // };
-        // const request = new Request('http://10.177.2.240:8080/signup/vehicleOwner',options);
-        // const response = fetch(request);
-        // const status = response.status;
+         let data = this.createRequest();
+         const headers = new Headers();
+         headers.append('Content-Type', 'application/json');
+         headers.append('Accept', 'application/json');
+         const options = {
+             method: 'POST',
+             headers,
+             body: JSON.stringify(data)
+         };
+         const request = new Request('http://10.177.2.240:8080/signup/vehicleOwner',options);
+         const response = fetch(request);
+         const status = response.status;
         {/*<Route path="http://localhost:3000/addVehicle" component={AddVehicleForm}/>*/}
-        browserHistory.push('http://localhost:3000/addVehicle')
+        //browserHistory.push('http://localhost:3000/addVehicle')
     }
     createRequest(){
         let formFields = {};
